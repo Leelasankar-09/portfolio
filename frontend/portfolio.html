@@ -4,25 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leela Sankar Reddy - Portfolio</title>
-    <link rel="stylesheet" href="portfolio.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script defer src="portfolio.js"></script>
+    <link rel="stylesheet" href="portfolio.css">
 </head>
 <body>
     <!-- Navigation Bar -->
     <nav class="nav-links">
         <div class="nav-brand">LSR</div>
-        <input type="checkbox" id="nav-toggle" class="nav-toggle">
-        <label for="nav-toggle" class="nav-toggle-label">
-            <span></span>
-        </label>
         <div class="nav-menu">
-            <a href="#about">About</a>
-            <a href="#skills">Skills</a>
+            <a href="#home">Home</a>
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle">Portfolio <i class="fas fa-caret-down"></i></a>
+                <div class="dropdown-menu">
+                    <a href="#skills">Skills</a>
+                    <a href="#education">Education</a>
+                    <a href="#certifications">Certifications</a>
+                </div>
+            </div>
             <a href="#projects">Projects</a>
-            <a href="#education">Education</a>
-            <a href="#certifications">Certifications</a>
             <a href="#contact">Contact</a>
         </div>
     </nav>
@@ -32,8 +32,8 @@
         <button id="theme-button" aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
     </div>
 
-    <!-- Name and Bio Section with LeetCode Profile -->
-    <section class="intro">
+    <!-- Home Section -->
+    <section id="home" class="intro">
         <div class="intro-content">
             <div class="intro-text">
                 <p class="greeting">Hello there, I'm</p>
@@ -114,18 +114,7 @@
                 </p>
             </div>
             <div class="about-stats">
-                <div class="stat-item">
-                    <span class="stat-number">5+</span>
-                    <span class="stat-text">Projects Completed</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">3</span>
-                    <span class="stat-text">MongoDB Certifications</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">7.83</span>
-                    <span class="stat-text">Current CGPA</span>
-                </div>
+                <!-- Removed the stat-items as requested -->
             </div>
         </div>
     </section>
@@ -488,10 +477,16 @@
         <div class="footer-content">
             <div class="footer-logo">LSR</div>
             <div class="footer-links">
-                <a href="#about">About</a>
-                <a href="#skills">Skills</a>
+                <a href="#home">Home</a>
+                <div class="dropdown">
+                    <a href="#" class="dropdown-toggle">Portfolio <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="#skills">Skills</a>
+                        <a href="#education">Education</a>
+                        <a href="#certifications">Certifications</a>
+                    </div>
+                </div>
                 <a href="#projects">Projects</a>
-                <a href="#education">Education</a>
                 <a href="#contact">Contact</a>
             </div>
             <div class="footer-social">
@@ -516,16 +511,63 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- Music Player (Positioned at bottom) -->
+    <!-- Music Player -->
     <div class="music-player">
-        <div class="music-toggle">
+        <button class="music-toggle" onclick="toggleMusicPlayer()">
             <i class="fas fa-music"></i>
-        </div>
-        <div class="music-container">
+        </button>
+        <div class="music-container" id="music-container">
             <audio id="music" controls>
-                <source src="your-music-file.mp3" type="audio/mpeg">
+                <source src="audio/background-music.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
             </audio>
         </div>
     </div>
+
+    <script>
+        // Music Player Toggle Function
+        function toggleMusicPlayer() {
+            const musicContainer = document.getElementById('music-container');
+            if (musicContainer.style.display === 'none' || musicContainer.style.display === '') {
+                musicContainer.style.display = 'block';
+            } else {
+                musicContainer.style.display = 'none';
+            }
+        }
+
+        // Ensure the music container is hidden by default
+        document.addEventListener('DOMContentLoaded', () => {
+            const musicContainer = document.getElementById('music-container');
+            musicContainer.style.display = 'none';
+        });
+
+        // Back to Top Button
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Dark Mode Toggle
+        const themeButton = document.getElementById('theme-button');
+        const body = document.body;
+        themeButton.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const icon = themeButton.querySelector('i');
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            } else {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        });
+    </script>
 </body>
 </html>
