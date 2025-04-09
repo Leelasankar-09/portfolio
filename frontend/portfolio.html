@@ -12,6 +12,8 @@
     <!-- Navigation Bar -->
     <nav class="nav-links">
         <div class="nav-brand">LSR</div>
+        <input type="checkbox" id="nav-toggle" class="nav-toggle">
+        <label for="nav-toggle" class="nav-toggle-label"><span></span></label>
         <div class="nav-menu">
             <a href="#home">Home</a>
             <div class="dropdown">
@@ -424,7 +426,7 @@
         </p>
         <div class="contact-container">
             <!-- Contact Form -->
-            <form class="contact-form">
+            <form class="contact-form" id="contact-form">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name" placeholder="Your Name" required>
@@ -513,7 +515,7 @@
 
     <!-- Music Player -->
     <div class="music-player">
-        <button class="music-toggle" onclick="toggleMusicPlayer()">
+        <button class="music-toggle" aria-label="Toggle music player">
             <i class="fas fa-music"></i>
         </button>
         <div class="music-container" id="music-container">
@@ -524,50 +526,6 @@
         </div>
     </div>
 
-    <script>
-        // Music Player Toggle Function
-        function toggleMusicPlayer() {
-            const musicContainer = document.getElementById('music-container');
-            if (musicContainer.style.display === 'none' || musicContainer.style.display === '') {
-                musicContainer.style.display = 'block';
-            } else {
-                musicContainer.style.display = 'none';
-            }
-        }
-
-        // Ensure the music container is hidden by default
-        document.addEventListener('DOMContentLoaded', () => {
-            const musicContainer = document.getElementById('music-container');
-            musicContainer.style.display = 'none';
-        });
-
-        // Back to Top Button
-        const backToTopButton = document.getElementById('back-to-top');
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopButton.style.display = 'block';
-            } else {
-                backToTopButton.style.display = 'none';
-            }
-        });
-        backToTopButton.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Dark Mode Toggle
-        const themeButton = document.getElementById('theme-button');
-        const body = document.body;
-        themeButton.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            const icon = themeButton.querySelector('i');
-            if (body.classList.contains('dark-mode')) {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-            } else {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-            }
-        });
-    </script>
+    <script src="portfolio.js"></script>
 </body>
 </html>
