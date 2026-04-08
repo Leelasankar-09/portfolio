@@ -3,7 +3,6 @@ import { Hero } from "../views/hero.js";
 import { Education } from "../views/education.js";
 import { Projects } from "../views/projects.js";
 import { Skills } from "../views/skills.js";
-import { Achievements } from "../views/achievements.js";
 import { Contact } from "../views/contact.js";
 
 export function loadApp() {
@@ -13,6 +12,5 @@ export function loadApp() {
     Education() +
     Projects() +
     Skills() +
-    Achievements() +
     Contact();
 }

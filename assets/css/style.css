@@ -670,9 +670,8 @@ body[data-theme="light"] .cursor {
   font-weight: 600;
 }
 
-/* === MODIFIED: Skills + Achievements === */
-#skills .section-title,
-#achievements .section-title {
+/* === MODIFIED: Skills === */
+#skills .section-title {
   text-align: center;
   margin-bottom: 28px;
 }
@@ -751,10 +750,6 @@ body[data-theme="light"] .cursor {
   transform: translateY(-4px);
   color: var(--text-primary);
   box-shadow: 0 18px 32px rgba(15, 23, 42, 0.14);
-}
-
-#achievements .skills span {
-  background: linear-gradient(135deg, var(--accent-soft), rgba(255, 255, 255, 0.02));
 }
 
 /* === MODIFIED: Contact Section === */

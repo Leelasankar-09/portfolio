@@ -65,8 +65,3 @@ export const skills = [
   "React", "Next.js", "Node.js",
   "MongoDB", "Tailwind CSS"
 ];
-
-export const achievements = [
-  "Top 15% in JEE Advanced",
-  "Qualified Junior Science Olympiad"
-];

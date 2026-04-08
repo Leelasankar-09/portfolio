@@ -16,11 +16,11 @@ export function Hero() {
       </p>
 
       <div class="social-icons fade-in-delay2">
-        <a href="${profile.github}" target="_blank">
+        <a href="${profile.github}" target="_blank" rel="noreferrer">
           <i class="fab fa-github"></i>
         </a>
 
-        <a href="${profile.linkedin}" target="_blank">
+        <a href="${profile.linkedin}" target="_blank" rel="noreferrer">
           <i class="fab fa-linkedin"></i>
         </a>
 
@@ -28,7 +28,7 @@ export function Hero() {
           <i class="fas fa-envelope"></i>
         </a>
 
-        <a href="assets/resume/resume.pdf" download>
+        <a href="resume/Leela_Resume.pdf" download="Leela_Sankar_Reddy_Resume.pdf">
           <i class="fas fa-file-download"></i>
         </a>
       </div>

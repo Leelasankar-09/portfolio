@@ -57,26 +57,6 @@ function decorateStaticSections() {
   if (skillsSection) {
     skillsSection.classList.add("section-shell");
   }
-
-  const achievementsSection = findSectionByHeading("Achievements");
-  if (achievementsSection) {
-    achievementsSection.id = "achievements";
-    achievementsSection.classList.add("section-shell");
-  }
-
-  document
-    .querySelectorAll("#skills h2, #achievements h2")
-    .forEach((heading) => {
-      heading.classList.add("section-title");
-      heading.removeAttribute("style");
-    });
-}
-
-function findSectionByHeading(label) {
-  return Array.from(document.querySelectorAll("#app > section")).find((section) => {
-    const heading = section.querySelector("h2");
-    return heading && heading.textContent.trim() === label;
-  });
 }
 
 function syncResumeLinks() {
@@ -316,9 +296,7 @@ function initTypingEffect() {
 
 function initRevealAnimations() {
   const revealTargets = Array.from(
-    document.querySelectorAll(
-      "#projects .project-card, #skills .skill-card, #achievements .skills span, #contact .contact-shell"
-    )
+    document.querySelectorAll("#projects .project-card, #skills .skill-card, #contact .contact-shell")
   );
 
   if (!revealTargets.length) {
