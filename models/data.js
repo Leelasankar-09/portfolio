@@ -65,3 +65,49 @@ export const skills = [
   "React", "Next.js", "Node.js",
   "MongoDB", "Tailwind CSS"
 ];
+
+export const about = {
+  professionalSkillset: [
+    { name: "C++", icon: "fa-solid fa-file-code" },
+    { name: "JavaScript", icon: "fa-brands fa-js" },
+    { name: "TypeScript", icon: "fa-solid fa-code" },
+    { name: "Go", icon: "fa-solid fa-bolt" },
+    { name: "Node.js", icon: "fa-brands fa-node-js" },
+    { name: "React.js", icon: "fa-brands fa-react" },
+    { name: "Solidity", icon: "fa-solid fa-cube" },
+    { name: "MongoDB", icon: "fa-solid fa-leaf" },
+    { name: "Redux", icon: "fa-solid fa-arrows-rotate" },
+    { name: "Next.js", icon: "fa-solid fa-layer-group" },
+    { name: "Git", icon: "fa-brands fa-git-alt" },
+    { name: "Firebase", icon: "fa-solid fa-fire" },
+    { name: "Redis", icon: "fa-solid fa-server" },
+    { name: "Docker", icon: "fa-brands fa-docker" },
+    { name: "Kubernetes", icon: "fa-solid fa-dharmachakra" },
+    { name: "PostgreSQL", icon: "fa-solid fa-database" },
+    { name: "Python", icon: "fa-brands fa-python" },
+    { name: "Java", icon: "fa-brands fa-java" },
+    { name: "Haskell", icon: "fa-solid fa-function" },
+    { name: "Tailwind CSS", icon: "fa-solid fa-wind" },
+    { name: "Material UI", icon: "fa-solid fa-object-group" },
+    { name: "Postman", icon: "fa-solid fa-paper-plane" },
+    { name: "Rust", icon: "fa-solid fa-gear" },
+    { name: "AWS", icon: "fa-brands fa-aws" },
+    { name: "Kafka", icon: "fa-solid fa-stream" }
+  ],
+  tools: [
+    { name: "VS Code", icon: "fa-solid fa-code" },
+    { name: "Postman (API)", icon: "fa-solid fa-paper-plane" },
+    { name: "Google Chrome", icon: "fa-brands fa-chrome" }
+  ],
+  activity: {
+    username: "Leelasankar-09",
+    contributionsText: "147 contributions in the last year"
+  }
+};
+
+export const codingProfiles = {
+  leetcode: {
+    username: "DCs07yGZFb",
+    profileUrl: "https://leetcode.com/u/DCs07yGZFb/"
+  }
+};

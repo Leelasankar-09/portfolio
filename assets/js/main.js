@@ -35,8 +35,9 @@ function initializePortfolio() {
   decorateStaticSections();
   syncResumeLinks();
   initThemeToggle();
+  initProjectSlider();
+  syncLeetCodeTheme(document.body.dataset.theme || "dark");
   initBackground();
-  initCursor();
   initTypingEffect();
   initRevealAnimations();
 }
@@ -82,6 +83,40 @@ function initThemeToggle() {
   updateThemeToggle(document.body.dataset.theme || "dark");
 }
 
+function initProjectSlider() {
+  const rail = document.querySelector("[data-projects-rail]");
+  const prevButton = document.querySelector('[data-project-nav="prev"]');
+  const nextButton = document.querySelector('[data-project-nav="next"]');
+
+  if (!rail || !prevButton || !nextButton) {
+    return;
+  }
+
+  const scrollAmount = () => {
+    const firstCard = rail.querySelector(".project-card");
+    if (!firstCard) {
+      return rail.clientWidth * 0.85;
+    }
+
+    const gap = 24;
+    return firstCard.getBoundingClientRect().width + gap;
+  };
+
+  prevButton.addEventListener("click", () => {
+    rail.scrollBy({
+      left: -scrollAmount(),
+      behavior: "smooth",
+    });
+  });
+
+  nextButton.addEventListener("click", () => {
+    rail.scrollBy({
+      left: scrollAmount(),
+      behavior: "smooth",
+    });
+  });
+}
+
 function getPreferredTheme() {
   try {
     const storedTheme = window.localStorage.getItem(STORAGE_KEY);
@@ -108,6 +143,7 @@ function applyTheme(theme, { persist = true } = {}) {
   }
 
   updateThemeToggle(resolvedTheme);
+  syncLeetCodeTheme(resolvedTheme);
   updateBackgroundTheme(resolvedTheme);
 }
 
@@ -141,44 +177,51 @@ function initBackground() {
     return;
   }
 
-  const canvas = document.querySelector("#bg");
-  if (!canvas) {
+  const container = document.querySelector("#bg-canvas");
+  if (!container) {
     return;
   }
 
+  container.innerHTML = "";
+
   const scene = new window.THREE.Scene();
   const camera = new window.THREE.PerspectiveCamera(
-    65,
+    60,
     window.innerWidth / window.innerHeight,
     0.1,
     1000
   );
 
   const renderer = new window.THREE.WebGLRenderer({
-    canvas,
     antialias: true,
     alpha: true,
   });
 
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.25));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor(0x000000, 0);
-  camera.position.z = 5;
+  renderer.domElement.setAttribute("aria-hidden", "true");
+  container.appendChild(renderer.domElement);
+  camera.position.z = 5.8;
 
   const palette = getParticlePalette(document.body.dataset.theme);
-  const layerOne = createParticles(750, 0.018, palette.primary, 13);
-  const layerTwo = createParticles(340, 0.03, palette.secondary, 22);
+  const layerOne = createParticles(240, 0.018, palette.primary, 18, 0.16);
+  const layerTwo = createParticles(110, 0.024, palette.secondary, 26, 0.09);
+  const layerThree = createParticles(42, 0.032, palette.tertiary, 34, 0.05);
 
-  backgroundState.layers = [layerOne, layerTwo];
+  backgroundState.layers = [layerOne, layerTwo, layerThree];
   backgroundState.renderer = renderer;
   backgroundState.camera = camera;
 
   scene.add(layerOne);
   scene.add(layerTwo);
+  scene.add(layerThree);
 
   const animate = () => {
-    layerOne.rotation.y += 0.00055;
-    layerTwo.rotation.x += 0.00035;
+    layerOne.rotation.y += 0.00008;
+    layerOne.rotation.x += 0.00003;
+    layerTwo.rotation.x += 0.00005;
+    layerThree.rotation.z += 0.000025;
     renderer.render(scene, camera);
     window.requestAnimationFrame(animate);
   };
@@ -192,7 +235,7 @@ function initBackground() {
   });
 }
 
-function createParticles(count, size, color, spread) {
+function createParticles(count, size, color, spread, opacity) {
   const geometry = new window.THREE.BufferGeometry();
   const positions = new Float32Array(count * 3);
 
@@ -206,7 +249,8 @@ function createParticles(count, size, color, spread) {
     color,
     size,
     transparent: true,
-    opacity: 0.88,
+    opacity,
+    depthWrite: false,
   });
 
   return new window.THREE.Points(geometry, material);
@@ -215,14 +259,16 @@ function createParticles(count, size, color, spread) {
 function getParticlePalette(theme) {
   if (theme === "light") {
     return {
-      primary: 0x0ea5e9,
-      secondary: 0x1e293b,
+      primary: 0xd7dce3,
+      secondary: 0xe8ecf1,
+      tertiary: 0xc8ced8,
     };
   }
 
   return {
-    primary: 0x7dd3fc,
-    secondary: 0xe0f2fe,
+    primary: 0xcfc5f9,
+    secondary: 0xf2f4ff,
+    tertiary: 0x8e84b7,
   };
 }
 
@@ -234,23 +280,9 @@ function updateBackgroundTheme(theme) {
   const palette = getParticlePalette(theme);
   backgroundState.layers[0].material.color.setHex(palette.primary);
   backgroundState.layers[1].material.color.setHex(palette.secondary);
-}
-
-function initCursor() {
-  const cursor = document.querySelector(".cursor");
-  if (!cursor) {
-    return;
+  if (backgroundState.layers[2]) {
+    backgroundState.layers[2].material.color.setHex(palette.tertiary);
   }
-
-  if (!window.matchMedia("(pointer: fine)").matches) {
-    cursor.style.display = "none";
-    return;
-  }
-
-  document.addEventListener("mousemove", (event) => {
-    cursor.style.left = `${event.clientX}px`;
-    cursor.style.top = `${event.clientY}px`;
-  });
 }
 
 function initTypingEffect() {
@@ -296,7 +328,9 @@ function initTypingEffect() {
 
 function initRevealAnimations() {
   const revealTargets = Array.from(
-    document.querySelectorAll("#projects .project-card, #skills .skill-card, #contact .contact-shell")
+    document.querySelectorAll(
+      "#about .about-panel, #projects .project-card, #skills .skill-card, #coding-profiles .coding-profile-card, #coding-profiles .leetcode-stats-card, #contact .contact-shell"
+    )
   );
 
   if (!revealTargets.length) {
@@ -316,6 +350,18 @@ function initRevealAnimations() {
   window.requestAnimationFrame(() => {
     revealTargets.forEach((element) => element.classList.add("is-visible"));
   });
+}
+
+function syncLeetCodeTheme(theme) {
+  const statsImage = document.querySelector("[data-leetcode-stats]");
+  if (!statsImage) {
+    return;
+  }
+
+  const username = statsImage.dataset.username;
+  const cardTheme = theme === "light" ? "light" : "dark";
+
+  statsImage.src = `https://leetcard.jacoblin.cool/${username}?theme=${cardTheme}&font=Inter&ext=contest`;
 }
 
 function queueLoaderDismiss() {
